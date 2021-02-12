@@ -6,39 +6,37 @@ import {
   Delete,
   Patch,
   Body,
-  Query,
 } from '@nestjs/common';
+import { MoviesService } from './movies.service';
+import { Movie } from './entities/movie.entity';
 
 @Controller('movies')
 // this is entry point
 // localhost:3000/movies
 export class MoviesController {
-  @Get()
-  getAll() {
-    return 'This will return all movies';
-  }
+  constructor(private readonly moviesService: MoviesService) {}
 
-  @Get('search')
-  search(@Query('year') searchingYear: string) {
-    return `We are searching for a movie mad after ${searchingYear}`;
+  @Get()
+  getAll(): Movie[] {
+    return this.moviesService.getAll();
   }
 
   @Get(':id')
   getOne(
     @Param('id')
     movieId: string,
-  ) {
-    return `This will return one movie with the id: ${movieId}`;
+  ): Movie {
+    return this.moviesService.getOne(movieId);
   }
 
   @Post()
   create(@Body() movieData) {
-    return movieData;
+    return this.moviesService.create(movieData);
   }
 
   @Delete(':id')
   delete(@Param('id') movieId: string) {
-    return `This will delete a movie with the id: ${movieId}`;
+    return this.moviesService.deleteOne(movieId);
   }
 
   // patch is update part of resource
