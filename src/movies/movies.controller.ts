@@ -17,6 +17,10 @@ import { UpdateMovieDto } from './dto/update-movie.dto';
 // localhost:3000/movies
 export class MoviesController {
   constructor(private readonly moviesService: MoviesService) {}
+  // movies.module.ts 의 providers 에 MoviesService 를 명시해서
+  // controller 에 MoviesService 를 주입 해줌
+  // controller 에서는 타입만 정의해도 가능함
+  // dependency injection
 
   @Get()
   getAll(): Movie[] {
